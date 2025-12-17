@@ -59,6 +59,20 @@ namespace MiniPokemon.Data
 			return Entrenador.Pokemons.Where(p => !p.EstaDebilitat).ToList();
 		}
 
+		public Pokemon? PokemonActiu(int idEntrenador, int idCombat)
+		{
+			var combat = _context.Combats.Find(idCombat);
+			if (combat == null) 
+				return null;
+
+			if (combat.IdEntrenador1 == idEntrenador)
+				return _context.Pokemons.Find(combat.IdPokemon1Actiu);
+			else if (combat.IdEntrenador2 == idEntrenador)
+				return _context.Pokemons.Find(combat.IdPokemon2Actiu);
+
+			return null;
+		}
+
 	}
 
 }

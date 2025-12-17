@@ -46,6 +46,15 @@ public class MiniPokemonContext : DbContext
                 cfg.MapRightKey("EvolucioSeguentId");
             });
 
+        modelBuilder.Entity<Combat>()
+            .HasOptional(c => c.Pokemon1Actiu)
+            .WithMany()
+            .HasForeignKey(c => c.IdPokemon1Actiu);
+
+        modelBuilder.Entity<Combat>()
+            .HasOptional(c => c.Pokemon2Actiu)
+            .WithMany()
+            .HasForeignKey(c => c.IdPokemon2Actiu);
 
         base.OnModelCreating(modelBuilder);
     }

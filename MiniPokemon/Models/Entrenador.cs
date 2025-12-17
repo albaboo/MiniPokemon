@@ -22,7 +22,6 @@ public class Entrenador
     [Range(0, int.MaxValue)]
     public int DinersPokedollars { get; set; } = 0;
 
-    [MaxLength(6)]
-    public ICollection<Pokemon> Pokemons { get; set; } = [];
+	public ICollection<Pokemon> Pokemons { get; set; } = new List<Pokemon>();
 
 }

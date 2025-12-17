@@ -1,48 +1,53 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Combat {
+public class Combat
+{
 
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-	public int IdCombat { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int IdCombat { get; set; }
 
-	[Required]
-	public int? IdEntrenador1 { get; set; }
+    [Required]
+    public int IdEntrenador1 { get; set; }
 
-	[Required]
-	public int? IdEntrenador2 { get; set; }
+    [ForeignKey(nameof(IdEntrenador1))]
+    public required Entrenador Entrenador1 { get; set; }
 
-	public int? IdGuanyador { get; set; } = null;
+    [Required]
+    public int IdEntrenador2 { get; set; }
 
-	[Range(1, int.MaxValue)]
-	public int Torn { get; set; } = 1;
+    [ForeignKey(nameof(IdEntrenador2))]
+    public required Entrenador Entrenador2 { get; set; }
 
-	[EnumDataType(typeof(EstatCombat))]
-	public EstatCombat EstatCombat { get; set; } = EstatCombat.EN_CURS;
+    public int? IdGuanyador { get; set; } = null;
 
-	[NotMapped]
-	[EnumDataType(typeof(TipusPokemon))]
-	public TipusPokemon TipusPokemon { get; set; }
+    [ForeignKey(nameof(IdGuanyador))]
+    public Entrenador? Guanyador { get; set; }
 
+    public int? IdPokemon1Actiu { get; set; }
+    [ForeignKey(nameof(IdPokemon1Actiu))]
+    public Pokemon? Pokemon1Actiu { get; set; }
 
-	[Required]
-	[StringLength(50)]
-	public string Tipus
-	{
-		get => TipusPokemon.ToString();
-		set => TipusPokemon = (TipusPokemon)Enum.Parse(typeof(TipusPokemon), value);
-	}
+    public int? IdPokemon2Actiu { get; set; }
+    [ForeignKey(nameof(IdPokemon2Actiu))]
+    public Pokemon? Pokemon2Actiu { get; set; }
 
-	[Required]
-	public DateTime DataInici { get; set; }
+    [Range(1, int.MaxValue)]
+    public int Torn { get; set; } = 1;
 
-	public DateTime? DataFi { get; set; } = null;
+    [EnumDataType(typeof(EstatCombat))]
+    public EstatCombat EstatCombat { get; set; } = EstatCombat.EN_CURS;
+
+    [Required]
+    public DateTime DataInici { get; set; } = DateTime.Now;
+
+    public DateTime? DataFi { get; set; } = null;
 
 }
 
 public enum EstatCombat
 {
-	EN_CURS,
-	FINALITZAT
+    EN_CURS,
+    FINALITZAT
 }

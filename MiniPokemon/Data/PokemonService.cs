@@ -76,5 +76,71 @@ namespace MiniPokemon.Data
 				_context.SaveChanges();
 			}
 		}
+
+		public bool AprendreMoviment(int idPokemon, int idMoviment)
+		{
+			var pokemon = _context.Pokemons
+				.Find(idPokemon);
+
+			if (pokemon == null) return false;
+			if (pokemon.Moviments.Count >= 4) return false;
+
+			var moviment = _context.Moviments
+				.Find(idMoviment);
+
+			if (moviment == null) return false;
+
+			pokemon.Moviments.Add(moviment);
+
+			_context.SaveChanges();
+			return true;
+		}
+
+		public bool OblidarMoviment(int idPokemon, int idMoviment)
+		{
+			var pokemon = _context.Pokemons
+				.Find(idPokemon);
+
+			if (pokemon == null) return false;
+
+			var moviment = _context.Moviments
+				.Find(idMoviment);
+
+			if (moviment == null) return false;
+
+			pokemon.Moviments.Remove(moviment);
+
+			_context.SaveChanges();
+			return true;
+		}
+
+		public bool PotEvolucionar(int idPokemon)
+		{
+			var p = _context.Pokemons.Find(idPokemon);
+			return p != null &&
+				   p.IdEvolucioSeguent != null &&
+				   p.Nivell >= p.NivellEvolucio;
+		}
+
+		public List<Pokemon> CadenaEvolutiva(int idPokemon)
+		{
+			var actual = _context.Pokemons.Find(idPokemon);
+
+			var cadena = new List<Pokemon>();
+
+			foreach (var pokemon in actual.EvolucioPrevia)
+			{
+				cadena.Add(pokemon);
+			}
+
+			cadena.Add(actual);
+
+			foreach (var pokemon in actual.EvolucioSeguent)
+			{
+				cadena.Add(pokemon);
+			}
+
+			return cadena;
+		}
 	}
 }
