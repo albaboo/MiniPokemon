@@ -76,6 +76,8 @@ dotnet new mstest -o MiniPokemon.Tests
 dotnet add MiniPokemon.Tests reference MiniPokemon/MiniPokemon.csproj
 ```
 
+More info [here](https://deepwiki.com/albaboo/MiniPokemon)
+
 ---
 
 ¡Gracias por visitar MiniPokemon! 🐾
